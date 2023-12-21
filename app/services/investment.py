@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import CharityProject, Donation
+from app.constants import PROJECTS_INVEST
 
 
 def close_donat(object):
@@ -18,10 +18,7 @@ async def investment(
     donats, project, session: AsyncSession
 ):
     '''Процесс пожертвования.'''
-    if project == 'CharityProject':
-        project = CharityProject
-    else:
-        project = Donation
+    project = PROJECTS_INVEST.get(project)
     objects = await session.execute(
         select(project).where(
             project.fully_invested == 0

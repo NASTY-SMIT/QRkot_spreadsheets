@@ -1,4 +1,5 @@
 from datetime import datetime
+from app.models import CharityProject, Donation
 
 CHECK_NAME_DUPLICATE = 'Проект с таким именем уже существует!'
 PROJECT_NOT_FOUND = 'Проект не найден!'
@@ -27,3 +28,8 @@ TABLE_VALUES = [
     ['Отчёт от', NOW_DATE_TIME],
     ['Топ проектов по скорости закрытия'],
     ['Название проекта', 'Время сбора', 'Описание']]
+
+PROJECTS_INVEST = {
+    'CharityProject': CharityProject,
+    'Donation': Donation
+}
