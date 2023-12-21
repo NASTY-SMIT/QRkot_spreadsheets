@@ -10,7 +10,6 @@ from app.api.validators import (
 from app.core.db import get_async_session
 from app.core.user import current_superuser
 from app.crud.charity_project import charity_project_crud
-from app.models import Donation
 from app.schemas.charity_project import (
     CharityProjectCreate,
     CharityProjectDB,
@@ -30,11 +29,11 @@ async def create_charity_project(
     charity_project: CharityProjectCreate,
     session: AsyncSession = Depends(get_async_session),
 ):
-    """Только для суперюзеров.
-        Создание проекта"""
+    '''Только для суперюзеров.
+        Создание проекта'''
     await check_name_duplicate(charity_project.name, session)
     new_project = await charity_project_crud.create(charity_project, session)
-    await investment(new_project, Donation, session)
+    await investment(new_project, 'Donation', session)
     return new_project
 
 
@@ -45,10 +44,9 @@ async def create_charity_project(
 async def get_all_charity_projects(
         session: AsyncSession = Depends(get_async_session),
 ):
-    """Для всех пользователей.
-    Получение списка всех проектов."""
-    charity_projects = await charity_project_crud.get_multi(session)
-    return charity_projects
+    '''Для всех пользователей.
+    Получение списка всех проектов.'''
+    return (await charity_project_crud.get_multi(session))
 
 
 @router.patch(
@@ -60,8 +58,8 @@ async def partially_update_charity_project(
         obj_in: CharityProjectUpdate,
         session: AsyncSession = Depends(get_async_session),
 ):
-    """Только для суперюзеров.
-        Редактирование проекта."""
+    '''Только для суперюзеров.
+        Редактирование проекта.'''
     charity_project = await check_charity_project_exists(
         project_id, session)
     if obj_in.name is not None:
@@ -69,9 +67,8 @@ async def partially_update_charity_project(
     check_project_closed(charity_project)
     if obj_in.full_amount is not None:
         check_edit_full_amount(charity_project, obj_in)
-    charity_project = await charity_project_crud.update(
-        charity_project, obj_in, session)
-    return charity_project
+    return (await charity_project_crud.update(
+        charity_project, obj_in, session))
 
 
 @router.delete(
@@ -82,11 +79,10 @@ async def remove_charity_project(
     project_id: int,
     session: AsyncSession = Depends(get_async_session),
 ):
-    """Только для суперюзеров.
-        Удаление проекта."""
+    '''Только для суперюзеров.
+        Удаление проекта.'''
     project = await check_charity_project_exists(
         project_id, session)
     check_project_invested(project)
-    project = await charity_project_crud.remove(
-        project, session)
-    return project
+    return (await charity_project_crud.remove(
+        project, session))

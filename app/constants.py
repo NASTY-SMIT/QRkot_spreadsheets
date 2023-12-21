@@ -11,8 +11,9 @@ PREFIX_DONATION = '/donation'
 PREFIX_GOOGLE = '/google'
 
 MIN_LENGTH_PASSWORD = 3
+LIFETIME_SECONDS = 3600
 
-FORMAT = "%Y/%m/%d %H:%M:%S"
+FORMAT = '%Y/%m/%d %H:%M:%S'
 NOW_DATE_TIME = datetime.now().strftime(FORMAT)
 SPREADSHEET_BODY = {
     'properties': {'title': f'Отчёт на {NOW_DATE_TIME}',
