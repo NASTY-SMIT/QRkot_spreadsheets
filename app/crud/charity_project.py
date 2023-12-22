@@ -14,7 +14,7 @@ class CRUDCharityProject(CRUDBase):
         project_name: str,
         session: AsyncSession,
     ) -> Optional[int]:
-        '''Получение id проекта по имени.'''
+        """Получение id проекта по имени."""
         db_project_id = await session.execute(
             select(CharityProject.id).where(
                 CharityProject.name == project_name
@@ -27,7 +27,7 @@ class CRUDCharityProject(CRUDBase):
         self,
         session: AsyncSession
     ) -> list:
-        '''Сортировка всех закрытых проектов.'''
+        """Сортировка всех закрытых проектов."""
         close_projects = await session.execute(
             select(CharityProject).where(
                 CharityProject.fully_invested

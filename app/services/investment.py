@@ -7,7 +7,7 @@ from app.constants import PROJECTS_INVEST
 
 
 def close_donat(object):
-    '''Процесс закрытия проекта/пожертвования.'''
+    """Процесс закрытия проекта/пожертвования."""
     object.fully_invested = True
     object.invested_amount = object.full_amount
     object.close_date = datetime.now()
@@ -17,7 +17,7 @@ def close_donat(object):
 async def investment(
     donats, project, session: AsyncSession
 ):
-    '''Процесс пожертвования.'''
+    """Процесс пожертвования."""
     project = PROJECTS_INVEST.get(project)
     objects = await session.execute(
         select(project).where(

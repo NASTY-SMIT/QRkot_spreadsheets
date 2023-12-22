@@ -6,7 +6,7 @@ from app.core.db import Base
 
 
 class Parent(Base):
-    '''Родительский класс для моделей CharityProject и Donation.'''
+    """Родительский класс для моделей CharityProject и Donation."""
 
     __abstract__ = True
 

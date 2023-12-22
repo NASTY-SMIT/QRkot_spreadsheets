@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from app.models import CharityProject, Donation
 
 CHECK_NAME_DUPLICATE = 'Проект с таким именем уже существует!'
@@ -16,14 +17,16 @@ LIFETIME_SECONDS = 3600
 
 FORMAT = '%Y/%m/%d %H:%M:%S'
 NOW_DATE_TIME = datetime.now().strftime(FORMAT)
+SPREADSHEET_ROW_COUNT = 100
+SPREADSHEET_COLUMN_COUNT = 3
 SPREADSHEET_BODY = {
     'properties': {'title': f'Отчёт на {NOW_DATE_TIME}',
                    'locale': 'ru_RU'},
     'sheets': [{'properties': {'sheetType': 'GRID',
                                'sheetId': 0,
                                'title': 'Лист1',
-                               'gridProperties': {'rowCount': 100,
-                                                  'columnCount': 3}}}]}
+                               'gridProperties': {'rowCount': SPREADSHEET_ROW_COUNT,
+                                                  'columnCount': SPREADSHEET_COLUMN_COUNT}}}]}
 TABLE_VALUES = [
     ['Отчёт от', NOW_DATE_TIME],
     ['Топ проектов по скорости закрытия'],

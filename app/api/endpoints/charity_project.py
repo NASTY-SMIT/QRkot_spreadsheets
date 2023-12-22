@@ -29,8 +29,8 @@ async def create_charity_project(
     charity_project: CharityProjectCreate,
     session: AsyncSession = Depends(get_async_session),
 ):
-    '''Только для суперюзеров.
-        Создание проекта'''
+    """Только для суперюзеров.
+        Создание проекта"""
     await check_name_duplicate(charity_project.name, session)
     new_project = await charity_project_crud.create(charity_project, session)
     await investment(new_project, 'Donation', session)
@@ -44,8 +44,8 @@ async def create_charity_project(
 async def get_all_charity_projects(
         session: AsyncSession = Depends(get_async_session),
 ):
-    '''Для всех пользователей.
-    Получение списка всех проектов.'''
+    """Для всех пользователей.
+    Получение списка всех проектов."""
     return (await charity_project_crud.get_multi(session))
 
 
@@ -58,8 +58,8 @@ async def partially_update_charity_project(
         obj_in: CharityProjectUpdate,
         session: AsyncSession = Depends(get_async_session),
 ):
-    '''Только для суперюзеров.
-        Редактирование проекта.'''
+    """Только для суперюзеров.
+        Редактирование проекта."""
     charity_project = await check_charity_project_exists(
         project_id, session)
     if obj_in.name is not None:
@@ -79,8 +79,8 @@ async def remove_charity_project(
     project_id: int,
     session: AsyncSession = Depends(get_async_session),
 ):
-    '''Только для суперюзеров.
-        Удаление проекта.'''
+    """Только для суперюзеров.
+        Удаление проекта."""
     project = await check_charity_project_exists(
         project_id, session)
     check_project_invested(project)
